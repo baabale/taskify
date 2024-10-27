@@ -14,6 +14,12 @@ describe('fileHandler', () => {
       writeTasksToFile(tasks);
       expect(fs.writeFileSync).toHaveBeenCalledWith('./data/tasks.json', JSON.stringify(tasks, null, 2));
     });
+
+    it('should write an empty array to file when given an empty array', () => {
+      const tasks = [];
+      writeTasksToFile(tasks);
+      expect(fs.writeFileSync).toHaveBeenCalledWith('./data/tasks.json', '[]');
+    });
   });
 
   describe('readTasksFromFile', () => {
@@ -30,6 +36,13 @@ describe('fileHandler', () => {
       fs.readFileSync.mockReturnValue('[]');
       const result = readTasksFromFile();
       expect(fs.writeFileSync).toHaveBeenCalledWith('./data/tasks.json', '[]');
+      expect(result).toEqual([]);
+    });
+
+    it('should return an empty array when the file is empty', () => {
+      fs.existsSync.mockReturnValue(true);
+      fs.readFileSync.mockReturnValue('[]');
+      const result = readTasksFromFile();
       expect(result).toEqual([]);
     });
   });

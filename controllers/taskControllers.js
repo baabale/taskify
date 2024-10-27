@@ -20,6 +20,14 @@ exports.createTask = (req, res) => {
             return;
         }
 
+        if (!fields.title) {
+            res.writeHead(400, { 'content-type': 'application/json'});
+            res.end(JSON.stringify({
+                message: 'Title is required'
+            }))
+            return;
+        }
+
         const image = files.image ? files.image[0] : null;
 
         const tasks = readTasksFromFile()
@@ -52,6 +60,14 @@ exports.updateTask = (req, res) => {
             res.writeHead(400, { 'content-type': 'application/json'});
             res.end(JSON.stringify({
                 message: 'Error parsing form'
+            }))
+            return;
+        }
+
+        if (!fields.title) {
+            res.writeHead(400, { 'content-type': 'application/json'});
+            res.end(JSON.stringify({
+                message: 'Title is required'
             }))
             return;
         }

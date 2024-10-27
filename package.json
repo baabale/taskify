@@ -4,7 +4,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "node --watch app.js"
+    "dev": "node --watch app.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -12,5 +13,9 @@
   "description": "",
   "dependencies": {
     "formidable": "^3.5.2"
+  },
+  "devDependencies": {
+    "jest": "^27.0.0",
+    "supertest": "^6.1.3"
   }
 }

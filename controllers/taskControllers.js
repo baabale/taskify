@@ -95,6 +95,16 @@ exports.updateTask = (req, res) => {
 exports.deleteTask = (req, res) => {
     const tasks = readTasksFromFile();
     const taskId = parseInt(req.url.split('/').pop());
+    const taskIndex = tasks.findIndex(task => task.id === taskId);
+
+    if (taskIndex === -1) {
+        res.writeHead(404, { 'content-type': 'application/json'});
+        res.end(JSON.stringify({
+            message: 'Task not found'
+        }))
+        return;
+    }
+
     const updatedTasks = tasks.filter(task => task.id !== taskId);
     writeTasksToFile(updatedTasks);
     res.writeHead(200, { 'content-type': 'application/json' });

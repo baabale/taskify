@@ -83,4 +83,10 @@ describe('Task Routes', () => {
         expect(response.status).toBe(200);
         expect(response.body.message).toBe('Task successfully deleted');
     });
+
+    it('should return 404 for unknown methods', async () => {
+        const response = await request(server).put('/tasks');
+        expect(response.status).toBe(404);
+        expect(response.body.message).toBe('Unknown Method required.');
+    });
 });

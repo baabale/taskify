@@ -58,6 +58,22 @@ describe('Task Controllers', () => {
                 expect(fs.existsSync(path.join(__dirname, '../uploads', path.basename(response.body.image)))).toBe(true);
             }
         });
+
+        it('should return 400 if title is missing', async () => {
+            const newTask = {
+                description: 'New Description',
+                status: 'pending'
+            };
+
+            const response = await request(server)
+                .post('/tasks')
+                .field('description', newTask.description)
+                .field('status', newTask.status)
+                .attach('image', path.join(__dirname, 'test_image.png'));
+
+            expect(response.status).toBe(400);
+            expect(response.body.message).toBe('Title is required');
+        });
     });
 
     describe('updateTask', () => {
@@ -94,6 +110,27 @@ describe('Task Controllers', () => {
             const response = await request(server).patch('/tasks/999');
             expect(response.status).toBe(404);
             expect(response.body.message).toBe('Task not found');
+        });
+
+        it('should return 400 if title is missing', async () => {
+            const tasks = [
+                { id: 1, title: 'Task 1', description: 'Description 1', status: 'pending', image: null }
+            ];
+            writeTasksToFile(tasks);
+
+            const updatedTask = {
+                description: 'Updated Description',
+                status: 'completed'
+            };
+
+            const response = await request(server)
+                .patch('/tasks/1')
+                .field('description', updatedTask.description)
+                .field('status', updatedTask.status)
+                .attach('image', path.join(__dirname, 'test_image.png'));
+
+            expect(response.status).toBe(400);
+            expect(response.body.message).toBe('Title is required');
         });
     });
 

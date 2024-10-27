@@ -20,7 +20,7 @@ exports.createTask = (req, res) => {
             return;
         }
 
-        const image = files.image[0]
+        const image = files.image ? files.image[0] : null;
 
         const tasks = readTasksFromFile()
 
@@ -36,10 +36,12 @@ exports.createTask = (req, res) => {
 
         writeTasksToFile(tasks);
 
-        if(files.image) {
+        if(image) {
             copyFileSync(image.filepath, path.join(__dirname, '../uploads', image.originalFilename));
-            res.end(JSON.stringify(newTask))
         }
+
+        res.writeHead(200, { 'content-type': 'application/json'});
+        res.end(JSON.stringify(newTask))
     })
 }
 
@@ -54,7 +56,7 @@ exports.updateTask = (req, res) => {
             return;
         }
 
-        const image = files.image[0]
+        const image = files.image ? files.image[0] : null;
 
         const tasks = readTasksFromFile()
 
@@ -81,7 +83,7 @@ exports.updateTask = (req, res) => {
 
         writeTasksToFile(tasks);
 
-        if(files.image) {
+        if(image) {
             copyFileSync(image.filepath, path.join(__dirname, '../uploads', image.originalFilename));
         }
 

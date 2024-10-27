@@ -1,45 +1,35 @@
 [
   {
     "id": 1730002464818,
-    "title": [
-      "Task 1"
-    ],
+    "title": "Task 1",
     "description": "",
     "status": "pending",
-    "image": "/uploads/undefined"
+    "image": "/uploads/valid_image1.png"
   },
   {
     "id": 1730002529317,
-    "title": [
-      "Task 1"
-    ],
+    "title": "Task 1",
     "description": "",
     "status": "pending",
-    "image": "/uploads/undefined"
+    "image": "/uploads/valid_image2.png"
   },
   {
     "id": 1730002644838,
-    "title": [
-      "Task 1"
-    ],
+    "title": "Task 1",
     "description": "",
     "status": "pending",
     "image": "/uploads/57bdd34fcac23c38b51345d00"
   },
   {
     "id": 1730002686368,
-    "title": [
-      "Task 1"
-    ],
+    "title": "Task 1",
     "description": "",
     "status": "pending",
     "image": "/uploads/img.png"
   },
   {
     "id": 1730002777979,
-    "title": [
-      "Task 1"
-    ],
+    "title": "Task 1",
     "description": "",
     "status": "pending",
     "image": "/uploads/img.png"

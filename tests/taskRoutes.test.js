@@ -2,6 +2,8 @@ const request = require('supertest');
 const http = require('http');
 const taskRoutes = require('../routes/taskRoutes');
 const { writeTasksToFile } = require('../utils/fileHandler');
+const fs = require('fs');
+const path = require('path');
 
 const server = http.createServer((req, res) => {
     taskRoutes(req, res);
@@ -29,12 +31,17 @@ describe('Task Routes', () => {
             .post('/tasks')
             .field('title', newTask.title)
             .field('description', newTask.description)
-            .field('status', newTask.status);
+            .field('status', newTask.status)
+            .attach('image', path.join(__dirname, 'test_image.png'));
 
         expect(response.status).toBe(200);
         expect(response.body.title).toBe(newTask.title);
         expect(response.body.description).toBe(newTask.description);
         expect(response.body.status).toBe(newTask.status);
+
+        if (response.body.image) {
+            expect(fs.existsSync(path.join(__dirname, '../uploads', path.basename(response.body.image)))).toBe(true);
+        }
     });
 
     it('should return 200 and update a task for PATCH /tasks/:id', async () => {
@@ -53,12 +60,17 @@ describe('Task Routes', () => {
             .patch('/tasks/1')
             .field('title', updatedTask.title)
             .field('description', updatedTask.description)
-            .field('status', updatedTask.status);
+            .field('status', updatedTask.status)
+            .attach('image', path.join(__dirname, 'test_image.png'));
 
         expect(response.status).toBe(200);
         expect(response.body.title).toBe(updatedTask.title);
         expect(response.body.description).toBe(updatedTask.description);
         expect(response.body.status).toBe(updatedTask.status);
+
+        if (response.body.image) {
+            expect(fs.existsSync(path.join(__dirname, '../uploads', path.basename(response.body.image)))).toBe(true);
+        }
     });
 
     it('should return 200 and delete a task for DELETE /tasks/:id', async () => {
